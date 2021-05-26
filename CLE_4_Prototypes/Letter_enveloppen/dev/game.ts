@@ -11,7 +11,7 @@ function init(){
   gameLoop(letters);
 }
 
-function getLetters(letter:string){
+function getLetters(letter:string, array:string[]){
   //Create div for card
   card = document.createElement('div');
   card.classList.add('card');
@@ -29,7 +29,7 @@ function getLetters(letter:string){
   goodButton.innerText = 'Goed';
   goodButton.addEventListener('click', function(){
     //function om de letter in de goeie array te stoppen.
-    goodLetterToArray(letter);
+    goodLetterToArray(letter, array);
   });
   card.appendChild(goodButton);
 
@@ -37,23 +37,29 @@ function getLetters(letter:string){
   wrongButton.innerText = 'Fout';
   wrongButton.addEventListener('click', function(){
     //function om de letter in de foute array te stoppen.
-    wrongLetterToArray(letter);
+    wrongLetterToArray(letter, array);
   });
   card.appendChild(wrongButton);
 }
 
 function newLetter(){
-  card.remove();
-  gameLoop(letters);
+  if (letters.length === 0 && onbeheerst.length > 0){
+    card.remove();
+    gameLoop(onbeheerst);
+  } else {
+    card.remove();
+    gameLoop(letters);
+  }
 }
 
-function wrongLetterToArray(letter:string){
+function wrongLetterToArray(letter:string, array:string[]){
   console.log(`de letter ${letter} is bij de onbeheerste array letters gestopt.`)
   onbeheerst.push(letter);
   for (let letter of onbeheerst){
     console.log(letter);
   }
-  filterArray(letter, letters);
+  filterArray(letter, array);
+  //filterArray(letter);
 } 
 
 function filterArray(letter:string, array:string[]){
@@ -62,16 +68,18 @@ function filterArray(letter:string, array:string[]){
   if (index === array.indexOf(letter)){
     array.splice(index, 1);
   }
+  //letters = letters.filter(l => l != letter)
   newLetter();
 }
 
-function goodLetterToArray(letter:string){
+function goodLetterToArray(letter:string, array:string[]){
   console.log(`de letter ${letter} is bij de beheerste array letters gestopt.`);
   beheerst.push(letter);
   for (let letter of beheerst){
     console.log(letter);
   }
-  filterArray(letter, letters);
+  filterArray(letter, array);
+  //filterArray(letter);
 }
 
 function shuffleArray(array:string[]) {
@@ -95,6 +103,6 @@ function gameLoop(array:string[]) {
   let letterId = array.length;
   let randLetter = array[Math.floor(Math.random() * letterId)];
   console.log(`Random letter = ${randLetter}`);
-  getLetters(randLetter);
+  getLetters(randLetter, array);
 }
 

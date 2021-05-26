@@ -10,7 +10,7 @@ function init() {
     letters = shuffleArray(letters);
     gameLoop(letters);
 }
-function getLetters(letter) {
+function getLetters(letter, array) {
     card = document.createElement('div');
     card.classList.add('card');
     let L = document.createElement('h1');
@@ -22,27 +22,33 @@ function getLetters(letter) {
     let goodButton = document.createElement('div');
     goodButton.innerText = 'Goed';
     goodButton.addEventListener('click', function () {
-        goodLetterToArray(letter);
+        goodLetterToArray(letter, array);
     });
     card.appendChild(goodButton);
     let wrongButton = document.createElement('div');
     wrongButton.innerText = 'Fout';
     wrongButton.addEventListener('click', function () {
-        wrongLetterToArray(letter);
+        wrongLetterToArray(letter, array);
     });
     card.appendChild(wrongButton);
 }
 function newLetter() {
-    card.remove();
-    gameLoop(letters);
+    if (letters.length === 0 && onbeheerst.length > 0) {
+        card.remove();
+        gameLoop(onbeheerst);
+    }
+    else {
+        card.remove();
+        gameLoop(letters);
+    }
 }
-function wrongLetterToArray(letter) {
+function wrongLetterToArray(letter, array) {
     console.log(`de letter ${letter} is bij de onbeheerste array letters gestopt.`);
     onbeheerst.push(letter);
     for (let letter of onbeheerst) {
         console.log(letter);
     }
-    filterArray(letter, letters);
+    filterArray(letter, array);
 }
 function filterArray(letter, array) {
     let index = array.indexOf(letter);
@@ -52,13 +58,13 @@ function filterArray(letter, array) {
     }
     newLetter();
 }
-function goodLetterToArray(letter) {
+function goodLetterToArray(letter, array) {
     console.log(`de letter ${letter} is bij de beheerste array letters gestopt.`);
     beheerst.push(letter);
     for (let letter of beheerst) {
         console.log(letter);
     }
-    filterArray(letter, letters);
+    filterArray(letter, array);
 }
 function shuffleArray(array) {
     let curId = array.length;
@@ -75,6 +81,6 @@ function gameLoop(array) {
     let letterId = array.length;
     let randLetter = array[Math.floor(Math.random() * letterId)];
     console.log(`Random letter = ${randLetter}`);
-    getLetters(randLetter);
+    getLetters(randLetter, array);
 }
 //# sourceMappingURL=game.js.map

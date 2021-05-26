@@ -1,4 +1,4 @@
-window.addEventListener('load', init);
+import {EndScreen} from "./endscreen.js"
 let card: HTMLElement;
 let letterCard : HTMLElement;
 let letters : string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y'];
@@ -46,9 +46,13 @@ function newLetter(){
   if (letters.length === 0 && onbeheerst.length > 0){
     card.remove();
     gameLoop(onbeheerst);
-  } else {
+  } else if (letters.length !== 0){
     card.remove();
     gameLoop(letters);
+  } else {
+    letterCard.remove();
+    let endScreen = new EndScreen();
+    // end screen
   }
 }
 
@@ -106,3 +110,4 @@ function gameLoop(array:string[]) {
   getLetters(randLetter, array);
 }
 
+init();

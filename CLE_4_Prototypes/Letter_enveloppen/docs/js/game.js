@@ -1,5 +1,4 @@
-"use strict";
-window.addEventListener('load', init);
+import { EndScreen } from "./endscreen.js";
 let card;
 let letterCard;
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y'];
@@ -37,9 +36,13 @@ function newLetter() {
         card.remove();
         gameLoop(onbeheerst);
     }
-    else {
+    else if (letters.length !== 0) {
         card.remove();
         gameLoop(letters);
+    }
+    else {
+        letterCard.remove();
+        let endScreen = new EndScreen();
     }
 }
 function wrongLetterToArray(letter, array) {
@@ -83,4 +86,5 @@ function gameLoop(array) {
     console.log(`Random letter = ${randLetter}`);
     getLetters(randLetter, array);
 }
+init();
 //# sourceMappingURL=game.js.map

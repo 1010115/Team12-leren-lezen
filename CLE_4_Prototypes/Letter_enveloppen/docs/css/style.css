@@ -3,7 +3,12 @@ body {
     justify-content: center;
     align-content: center;
     padding: 6rem;
-    font-family: 'Comic Sans MS', cursive;
+    font-family: 'School';
+}
+
+@font-face {
+    font-family: 'School';
+    src: url(SchoolKX_2018_Haasnoot-Regular.otf);
 }
 
 .header{
